@@ -8,17 +8,26 @@ export function MouseFollower() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [showTestimonials, setShowTestimonials] = useState(false)
   const [wheelDelta, setWheelDelta] = useState(0)
+  const [isMobile, setIsMobile] = useState(true)
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
     }
 
     const handleWheel = (e: WheelEvent) => {
+      if (isMobile) return
       e.preventDefault()
       setWheelDelta(prev => {
         const newDelta = prev + e.deltaY
-        if (newDelta > 400) { // Threshold for showing testimonials
+        if (newDelta > 200) {
           setShowTestimonials(true)
         } else if (newDelta < 0) {
           setShowTestimonials(false)
@@ -27,14 +36,21 @@ export function MouseFollower() {
       })
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('wheel', handleWheel, { passive: false })
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('wheel', handleWheel, { passive: false })
+    }
     
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('resize', checkMobile)
+      if (!isMobile) {
+        window.removeEventListener('mousemove', handleMouseMove)
+        window.removeEventListener('wheel', handleWheel)
+      }
     }
-  }, [])
+  }, [isMobile])
+
+  if (isMobile) return null
 
   return (
     <>
@@ -48,9 +64,9 @@ export function MouseFollower() {
         }}
         transition={{
           type: "spring",
-          damping: 30,
-          stiffness: 200,
-          mass: 0.5
+          damping: 50,
+          stiffness: 300,
+          mass: 0.2
         }}
       />
     </>
