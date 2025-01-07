@@ -54,7 +54,7 @@ export function MouseFollower() {
 
   return (
     <>
-      <Testimonials mousePosition={mousePosition} isVisible={showTestimonials} />
+      <Testimonials />
       <motion.div
         className="fixed w-8 h-8 rounded-full pointer-events-none mix-blend-difference z-50
                    bg-purple-400 dark:bg-gray-400"

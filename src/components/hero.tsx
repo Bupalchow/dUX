@@ -34,7 +34,7 @@ export function Hero() {
         <div className="absolute top-0 right-0 w-full lg:w-[90%] h-[90%] bg-purple-400 dark:bg-gray-400 rounded-[2rem] overflow-hidden mt-4">
           <img
             src="https://www.pngmart.com/files/15/Aesthetic-Artwork-PNG-Picture.png"
-            alt="Photographer with vintage camera"
+            alt="Absurd hero image"
             className="object-cover"
           />
           <img

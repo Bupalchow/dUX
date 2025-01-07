@@ -8,6 +8,11 @@ import { ThemeToggle } from './theme-toggle'
 export function Header() {
   const navItems = ['Home', 'Testimonials', 'Projects',  'Contact']
   
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id.toLowerCase())
+    element?.scrollIntoView({ behavior: 'smooth' })
+  }
+  
   return (
     <motion.header 
       initial={{ y: -20, opacity: 0 }}
@@ -20,13 +25,13 @@ export function Header() {
 
       <nav className="flex items-center justify-center flex-1">
         {navItems.map((item) => (
-          <Link
+          <button
             key={item}
-            href={`/${item.toLowerCase()}`}
+            onClick={() => scrollToSection(item.toLowerCase())}
             className="text-sm hover:text-gray-600 transition-colors px-4"
           >
             {item}
-          </Link>
+          </button>
         ))}
       </nav>
 
